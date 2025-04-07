@@ -4,10 +4,10 @@ import VideosList from "../Components/VideosList";
 
 const Processed = () => {
     return (
-        <>
+        <div className="flex flex-col h-screen">
             <Navbar/>
             <VideosList/>
-        </>
+        </div>
     )
 };
 

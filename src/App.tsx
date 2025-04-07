@@ -1,15 +1,12 @@
 import './App.css';
-import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router'
-import Upload from './Pages/Upload';
-import Processed from './Pages/Processed';
+import Home from './Pages/Home';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' index element={<Upload/>}/>
-        <Route path='/processed' element={<Processed/>}/>
+        <Route path='/' index element={<Home/>}/>
       </Routes>
     </BrowserRouter>
   );
