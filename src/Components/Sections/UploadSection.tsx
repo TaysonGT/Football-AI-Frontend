@@ -74,7 +74,7 @@ export default function UploadSection({
             : 'bg-green-600 hover:bg-green-700 shadow-md'
         }`}
       >
-        {uploadProgress > 0 
+        {uploadProgress > 0 || uploadProgress < 100
           ? 'Processing...' 
           : selectedFile
             ? 'Analyze Match Video'

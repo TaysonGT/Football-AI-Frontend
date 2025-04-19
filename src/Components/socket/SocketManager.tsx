@@ -4,6 +4,7 @@ import { io, Socket } from 'socket.io-client';
 export default function useSocket() {
   const [socket, setSocket] = useState<Socket | null>(null);
 
+
   useEffect(() => {
     const newSocket = io('http://localhost:3000/', {
       reconnectionAttempts: 5,
@@ -13,9 +14,6 @@ export default function useSocket() {
 
     newSocket.on('connect', () => {
       console.log('Connected with ID:', newSocket.id);
-      newSocket.emit('join', { room: newSocket.id }, (response: any) => {
-        console.log('Join acknowledgement:', response);
-      });
     });
 
     setSocket(newSocket);
