@@ -4,13 +4,12 @@ import axios from 'axios';
 import Navbar from './Components/Layout/Navbar';
 import UploadSection from './Components/Sections/UploadSection';
 import AboutSection from './Components/Sections/AboutSection';
-// import {io, Socket} from 'socket.io-client'
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<'upload' | 'about'>('upload');
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const [uploadMessage, setUploadMessage] = useState<string>('Ready to analyze match footage');
-  const [logLines, setLogLines] = useState<string[]>(['-----------']);
+  // const [logLines, setLogLines] = useState<string[]>(['-----------']);
   
   const wsRef = useRef<WebSocket>(null)
 
@@ -28,7 +27,7 @@ export default function App() {
       });
       const { video_path } = response.data;
       console.log('Upload response:', response.data);
-      setLogLines([])
+      // setLogLines([])
       startWebSocket(video_path)
       // connectSocket(video_path)
 
@@ -58,7 +57,7 @@ export default function App() {
         setUploadMessage(data.message);
       } else if (data.log) {
         console.log("Log:", data.log);
-        setLogLines((prev)=> [...prev, data.log])
+        // setLogLines((prev)=> [...prev, data.log])
       } else if (data.done) {
         setUploadMessage("✅ Processing complete!");
       } else if (data.error) {
@@ -84,15 +83,15 @@ export default function App() {
           <AboutSection />
         )}
       </main>
-
-      <div className='h-[400px] w-[400px] absolute top-[50%] left-0 overflow-y-scroll bg-slate-300 text-center text-xl'>
+{/* 
+      <div className='h-[400px] w-[400px] absolute top-[50%] -translate-y-[50%] -left-[0] -translate-x-[90%] hover:translate-x-0 ease-in-out duration-150 overflow-y-scroll bg-slate-300 text-center text-xl'>
         {logLines.map((line, key)=>(
 
           <div key={key}>{line}</div>
       
         ))
         }
-      </div>
+      </div> */}
 
       <footer className="bg-green-800 text-white p-4 text-center text-sm">
         © {new Date().getFullYear()} FootballVision AI - Advanced Match Analysis

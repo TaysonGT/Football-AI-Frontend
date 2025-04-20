@@ -16,6 +16,7 @@ export default function UploadSection({
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setSelectedFile(e.target.files[0]);
+
     }
   };
 
@@ -32,6 +33,7 @@ export default function UploadSection({
           ref={fileInputRef}
           accept="video/*"
           className="hidden"
+          disabled={uploadProgress > 0 && uploadProgress <= 100}
           id="file-upload"
           onChange={handleFileChange}
         />
@@ -67,18 +69,21 @@ export default function UploadSection({
 
       <button
         onClick={() => selectedFile && handleUpload(selectedFile)}
-        disabled={!selectedFile || (uploadProgress > 0 && uploadProgress < 100)}
+        disabled={!selectedFile || (uploadProgress > 0 && uploadProgress <= 100)}
         className={`px-6 py-3 rounded-full font-medium text-white transition-all ${
-          !selectedFile || (uploadProgress > 0 && uploadProgress < 100)
-            ? 'bg-gray-400 cursor-not-allowed'
+          !selectedFile || (uploadProgress > 0 && uploadProgress < 100)?   
+            'bg-gray-400 cursor-not-allowed'
             : 'bg-green-600 hover:bg-green-700 shadow-md'
         }`}
       >
-        {uploadProgress > 0 || uploadProgress < 100
-          ? 'Processing...' 
+        {uploadProgress > 0?  
+          uploadProgress < 100?
+          'Processing...'  : 'Processing Complete!'
           : selectedFile
             ? 'Analyze Match Video'
-            : 'Select a File First'}
+            : 'Select a File First'
+          
+          }
       </button>
 
       <ProgressBar progress={uploadProgress} message={uploadMessage} />
