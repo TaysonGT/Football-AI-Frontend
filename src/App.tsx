@@ -4,6 +4,18 @@ import axios from 'axios';
 import Navbar from './Components/Layout/Navbar';
 import UploadSection from './Components/Sections/UploadSection';
 import AboutSection from './Components/Sections/AboutSection';
+import PossessionStats from './Components/Layout/PossessionStats';
+
+type PossessionType = {
+  team1:{
+    percent: Number, 
+    color: string
+  }, 
+  team2: {
+    percent: Number, 
+    color: string
+  }
+}
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<'upload' | 'about'>('upload');
@@ -11,8 +23,9 @@ export default function App() {
   const [uploadMessage, setUploadMessage] = useState<string>('Ready to analyze match footage');
   // const [logLines, setLogLines] = useState<string[]>(['-----------']);
   
-  const wsRef = useRef<WebSocket>(null)
+  const [finalPossession, setFinalPossession] = useState<PossessionType|null>(null)
 
+  const wsRef = useRef<WebSocket>(null)
 
   const handleUpload = async (file: File) => {
     const formData = new FormData();
@@ -58,6 +71,8 @@ export default function App() {
       } else if (data.log) {
         console.log("Log:", data.log);
         // setLogLines((prev)=> [...prev, data.log])
+      } else if(data.finalPossession){
+        setFinalPossession(data.finalPossession)
       } else if (data.done) {
         setUploadMessage("✅ Processing complete!");
       } else if (data.error) {
@@ -83,18 +98,14 @@ export default function App() {
           <AboutSection />
         )}
       </main>
-{/* 
-      <div className='h-[400px] w-[400px] absolute top-[50%] -translate-y-[50%] -left-[0] -translate-x-[90%] hover:translate-x-0 ease-in-out duration-150 overflow-y-scroll bg-slate-300 text-center text-xl'>
-        {logLines.map((line, key)=>(
 
-          <div key={key}>{line}</div>
-      
-        ))
-        }
-      </div> */}
+      {finalPossession&&
+        
+        <PossessionStats finalPossession={finalPossession} displayMode='fixed'/>
+      }
 
       <footer className="bg-green-800 text-white p-4 text-center text-sm">
-        © {new Date().getFullYear()} FootballVision AI - Advanced Match Analysis
+        © {new Date().getFullYear()} Football<span className='font-bold'>Vision</span> - Match Analysis
       </footer>
     </div>
   );
