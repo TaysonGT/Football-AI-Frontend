@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import axios from 'axios';
 import Navbar from './Components/Layout/Navbar';
 import UploadSection from './Components/Sections/UploadSection';
-import AboutSection from './Components/Sections/AboutSection';
+import ProcessedSection from './Components/Sections/ProcessedSection';
 import PossessionStats from './Components/Layout/PossessionStats';
 
 type PossessionType = {
@@ -18,7 +18,7 @@ type PossessionType = {
 }
 
 export default function App() {
-  const [activeSection, setActiveSection] = useState<'upload' | 'about'>('upload');
+  const [activeSection, setActiveSection] = useState<'upload' | 'processed'>('upload');
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const [uploadMessage, setUploadMessage] = useState<string>('Ready to analyze match footage');
   // const [logLines, setLogLines] = useState<string[]>(['-----------']);
@@ -104,7 +104,7 @@ export default function App() {
             uploadMessage={uploadMessage}
           />
         ) : (
-          <AboutSection />
+          <ProcessedSection />
         )}
       </main>
 

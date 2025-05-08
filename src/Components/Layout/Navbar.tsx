@@ -1,6 +1,6 @@
 export default function Navbar({ activeSection, setActiveSection }: {
-  activeSection: 'upload' | 'about';
-  setActiveSection: (section: 'upload' | 'about') => void;
+  activeSection: 'upload' | 'processed';
+  setActiveSection: (section: 'upload' | 'processed') => void;
 }) {
   return (
     <nav className="flex items-center justify-between bg-green-700 text-white p-4 shadow-lg">
@@ -18,10 +18,10 @@ export default function Navbar({ activeSection, setActiveSection }: {
           Match Analysis
         </button>
         <button 
-          onClick={() => setActiveSection('about')}
-          className={`px-3 py-1 rounded-lg transition-all ${activeSection === 'about' ? 'bg-white text-green-700 font-bold' : 'hover:bg-green-600'}`}
+          onClick={() => setActiveSection('processed')}
+          className={`px-3 py-1 rounded-lg transition-all ${activeSection === 'processed' ? 'bg-white text-green-700 font-bold' : 'hover:bg-green-600'}`}
         >
-          About
+          Processed
         </button>
       </div>
     </nav>
