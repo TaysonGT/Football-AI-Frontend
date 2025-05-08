@@ -12,10 +12,11 @@ interface Props {
       color: string
     }
   },
-  displayMode: string
+  displayMode: string,
+  handleShowVideo: ()=>void
 }
 
-const PossessionStats:React.FC<Props> = ({ finalPossession, displayMode = 'fixed' }) => {
+const PossessionStats:React.FC<Props> = ({ finalPossession, displayMode = 'fixed', handleShowVideo }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   // Auto-hide after 5 seconds if in popup mode
@@ -32,7 +33,7 @@ const PossessionStats:React.FC<Props> = ({ finalPossession, displayMode = 'fixed
   const containerClasses = [
     'text-xl font-bold p-6 bg-neutral-800/90 backdrop-blur-sm',
     'rounded-lg shadow-xl border border-neutral-700',
-    displayMode === 'fixed' ? 'fixed bottom-4 right-4 z-50 w-[320px]' : '',
+    displayMode === 'fixed' ? 'fixed top-[50%] left-[50%] translate-x-[calc(-50%-400px)] -translate-y-[50%] z-50 w-[320px]' : '',
     displayMode === 'inline' ? 'mx-auto my-4 w-full max-w-md' : ''
   ].join(' ');
 
@@ -56,7 +57,7 @@ const PossessionStats:React.FC<Props> = ({ finalPossession, displayMode = 'fixed
             backgroundColor: `rgba(${finalPossession.team1.color.split('(')[1].split(')')[0]}, 0.1)`
           }}
         >
-          {finalPossession.team1.percent.toFixed(1)}%
+          {finalPossession.team1.percent.toString()}%
         </div>
         
         <div className="text-sm text-neutral-400">POSSESSION</div>
@@ -68,7 +69,7 @@ const PossessionStats:React.FC<Props> = ({ finalPossession, displayMode = 'fixed
             backgroundColor: `rgba(${finalPossession.team2.color.split('(')[1].split(')')[0]}, 0.1)`
           }}
         >
-          {finalPossession.team2.percent.toFixed(1)}%
+          {finalPossession.team2.percent.toString()}%
         </div>
       </div>
       
@@ -85,6 +86,11 @@ const PossessionStats:React.FC<Props> = ({ finalPossession, displayMode = 'fixed
           transition={{ duration: 1, type: 'spring' }}
           style={{ background: `rgb(${finalPossession.team2.color.split('(')[1].split(')')[0]})` }}
         />
+      </div>
+      <div 
+      className="text-xl bg-green-600 hover:bg-green-200 hover:text-green-600 text-white rounded-md p-2 text-center mt-5 duration-200 cursor-pointer select-none"
+      onClick={()=> handleShowVideo()}>
+        Display Video
       </div>
     </motion.div>
   );

@@ -22,6 +22,7 @@ export default function App() {
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const [uploadMessage, setUploadMessage] = useState<string>('Ready to analyze match footage');
   // const [logLines, setLogLines] = useState<string[]>(['-----------']);
+  const [videoPath, setVideoPath] = useState<string|null>(null)
   
   const [finalPossession, setFinalPossession] = useState<PossessionType|null>(null)
 
@@ -43,8 +44,6 @@ export default function App() {
       // setLogLines([])
       startWebSocket(video_path)
       // connectSocket(video_path)
-
-      
 
     } catch (error) {
       console.error('Upload failed:', error);
@@ -74,6 +73,7 @@ export default function App() {
       } else if(data.finalPossession){
         setFinalPossession(data.finalPossession)
       } else if (data.done) {
+        setVideoPath(data.video_path)
         setUploadMessage("✅ Processing complete!");
       } else if (data.error) {
         console.error("Server error:", data.error);
@@ -82,6 +82,15 @@ export default function App() {
 
     ws.onclose = () => console.log("🔌 WebSocket disconnected");
   };
+
+  const handleShowVideo = ()=>{
+    if(videoPath){
+      axios.get(`http://localhost:3000/play_video/${videoPath.split('/')[1]}`)
+      .then(({data})=>{
+        console.log(data)
+      })
+    }else console.log('No video path provided')
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 relative">
@@ -101,7 +110,7 @@ export default function App() {
 
       {finalPossession&&
         
-        <PossessionStats finalPossession={finalPossession} displayMode='fixed'/>
+        <PossessionStats {... {finalPossession, displayMode: 'fixed', handleShowVideo}} />
       }
 
       <footer className="bg-green-800 text-white p-4 text-center text-sm">
